@@ -6,17 +6,30 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {  
-      show : true,
-    fullName: "AKON",
+     fullName: "AKON",
     bio :  "de son vrai nom Alioune Badara Thiam, est un chanteur et producteur de RnB américain, né le 16 avril 1973 à Saint-Louis, dans le Missouri",
      imgSrc : "https://images.lesindesradios.fr/fit-in/1100x2000/filters:format(webp)/radios/activ/import/2014/03/akon.jpg", 
      profession : "Singer and Producer",
-     count: 0
+     show : true,
+     mountTime : new Date(),
+
     }  
-   }
+    
+  };
   handleClick=()=>this.setState((currentState) => ({show: !currentState.show}));
 
+componentDidMount() {
+
+  this.intervalId = setInterval(() => {this.forceUpdate();},1000);
+}
+componentWillUnmount()
+{
+  clearInterval(this.intervalId);
+
+}
+
  render() {
+  const {mountTime} =this.state;
     if (this.state.show)
       return (
   
@@ -40,12 +53,15 @@ class App extends React.Component {
 
 
 
+
 </div>
     </>
   ); 
 else return(
 <div>
 <button onClick={this.handleClick}> ClickMe </button>
+<p>{Math.floor((new Date() - mountTime) / 1000 )}</p>
+
 
 
 
